@@ -1,1 +1,594 @@
-# -Finovance-Consalting-UG
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finovance Consalting UG — Finanzberatung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#1a1a17;
+    --line:#dcdcda;
+    --line-strong:#b8b8b4;
+    --stone:#565654;
+    --stone-light:#7a7a76;
+    --r:10px;
+    --accent:#20402f;
+    --accent-dark:#152b20;
+    --accent-soft:#e5ece7;
+    --accent-light:#8fb89f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+  }
+  body.locked{overflow:hidden;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;letter-spacing:-0.005em;}
+  .icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ink);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .nav-left{display:flex;align-items:center;gap:18px;}
+  .burger{
+    display:flex;background:none;border:1.5px solid var(--accent);color:var(--accent);cursor:pointer;
+    width:44px;height:44px;align-items:center;justify-content:center;
+    flex-shrink:0;border-radius:var(--r);transition:background .2s,color .2s;
+  }
+  .burger:hover{background:var(--accent);color:#fff;}
+  .burger .icon{width:20px;height:20px;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo .mark{
+    width:38px;height:38px;border:1.5px solid var(--accent);border-radius:var(--r);
+    color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Source Serif 4',serif;font-size:15px;flex-shrink:0;
+  }
+  .logo .word{line-height:1.15;}
+  .logo .word b{
+    display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;
+    letter-spacing:.08em;text-transform:uppercase;
+  }
+  .logo .word small{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--stone);
+    letter-spacing:.14em;text-transform:uppercase;margin-top:2px;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+    letter-spacing:.02em;padding:13px 26px;border-radius:var(--r);
+    border:1.5px solid var(--accent);cursor:pointer;display:inline-block;
+    transition:background .2s, color .2s;
+  }
+  .btn-solid{background:var(--accent);color:#fff;}
+  .btn-solid:hover{background:var(--accent-dark);}
+  .btn-outline{background:transparent;color:var(--accent);}
+  .btn-outline:hover{background:var(--accent);color:#fff;}
+  .nav .btn{padding:11px 20px;font-size:12.5px;}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar-overlay{
+    position:fixed;inset:0;background:rgba(15,14,11,.5);
+    opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:90;
+  }
+  .sidebar-overlay.open{opacity:1;pointer-events:auto;}
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;width:min(380px,88vw);
+    background:var(--ink);color:#efece3;
+    transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    z-index:95;display:flex;flex-direction:column;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-head{display:flex;align-items:center;justify-content:space-between;padding:24px;border-bottom:1px solid #34321f;}
+  .sidebar-head .logo .word small{color:var(--stone-light);}
+  .sidebar-head .logo .mark{border-color:#55523f;}
+  .sidebar-close{
+    background:none;border:1.5px solid #55523f;color:#efece3;cursor:pointer;
+    width:38px;height:38px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;
+  }
+  .sidebar-close .icon{width:18px;height:18px;}
+  .sidebar-search{padding:16px 24px;}
+  .sidebar-search .field-shell{
+    display:flex;align-items:center;gap:10px;border:1.5px solid #4a473b;border-radius:var(--r);
+    padding:12px 14px;background:#232219;
+  }
+  .sidebar-search input{
+    flex:1;background:none;border:0;color:#efece3;font-family:'Inter',sans-serif;
+    font-size:14px;outline:none;
+  }
+  .sidebar-search input::placeholder{color:#8b8672;}
+  .sidebar-search .icon{width:17px;height:17px;color:#8b8672;}
+  .sidebar-nav{flex:1;overflow-y:auto;padding:8px 16px;}
+  .sidebar-item{
+    display:flex;align-items:center;gap:16px;
+    padding:14px;margin-bottom:4px;border-radius:var(--r);
+    font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:#efece3;
+    transition:background .15s;
+  }
+  .sidebar-item:hover{background:#25241a;}
+  .sidebar-item .icon-chip{
+    width:44px;height:44px;border-radius:50%;background:var(--accent-dark);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .sidebar-item .icon-chip .icon{color:var(--accent-light);width:22px;height:22px;}
+  .sidebar-item span.label{flex:1;}
+  .sidebar-item .chevron{width:15px;height:15px;color:#6f6b58;}
+  .sidebar-foot{padding:20px 24px 26px;border-top:1px solid #34321f;}
+  .sidebar-foot p{font-size:12px;color:#9a9584;line-height:1.6;margin-bottom:16px;}
+  .sidebar-foot .btn{width:100%;text-align:center;border-color:#efece3;color:#efece3;}
+  .sidebar-foot .btn:hover{background:#efece3;color:var(--ink);}
+
+  /* ---------- Image placeholder ---------- */
+  .img-placeholder{
+    border:2px dashed var(--line-strong);border-radius:var(--r);
+    background:#f5f5f4;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    color:var(--stone);text-align:center;padding:24px;
+  }
+  .img-placeholder .icon{width:38px;height:38px;color:var(--stone-light);}
+  .img-placeholder .ph-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--stone);}
+  .img-placeholder .ph-size{font-size:11px;color:var(--stone-light);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:76px 0 0;border-bottom:1px solid var(--ink);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  .hero h1{font-size:46px;line-height:1.15;margin:18px 0 22px;font-weight:500;}
+  .hero p.lead{font-size:16.5px;color:#4a4844;max-width:42ch;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-image{aspect-ratio:4/5;}
+
+  .quick-facts{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border-top:1px solid var(--line);margin-top:56px;
+  }
+  .qf-item{background:#fff;padding:26px 18px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;}
+  .qf-item .icon-chip{width:52px;height:52px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;}
+  .qf-item .icon-chip .icon{width:24px;height:24px;color:var(--accent);}
+  .qf-item span{font-size:13px;font-weight:600;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:80px 0;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;gap:24px;flex-wrap:wrap;}
+  .section-head h2{font-size:30px;font-weight:500;}
+  .section-head p{color:var(--stone);font-size:14px;max-width:34ch;}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--accent-soft);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .service-card{background:#fff;border-radius:var(--r);padding:32px 26px;text-align:center;}
+  .service-card .icon-chip{
+    width:72px;height:72px;border-radius:50%;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+  }
+  .service-card .icon-chip .icon{width:34px;height:34px;color:var(--accent);}
+  .service-card h3{font-size:20px;margin-bottom:10px;font-weight:500;}
+  .service-card p{font-size:13.5px;color:#514f49;}
+
+  .banner-placeholder{margin-top:56px;height:280px;}
+
+  /* ---------- News ---------- */
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .news-card{border:1.5px solid var(--line);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;gap:14px;}
+  .news-card .icon-chip{width:46px;height:46px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;}
+  .news-card .icon-chip .icon{width:22px;height:22px;color:var(--accent);}
+  .news-card .date{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--stone);}
+  .news-card h3{font-size:17.5px;font-weight:500;line-height:1.3;}
+  .news-card p{font-size:13px;color:#4f4c44;}
+  .news-card .arrow{margin-top:auto;font-family:'Source Serif 4',serif;font-size:18px;color:var(--accent);}
+
+  /* ---------- Booking ---------- */
+  .booking{background:var(--ink);color:#fff;}
+  .booking-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;}
+  .booking h2{color:#fff;font-size:30px;margin-bottom:14px;font-weight:500;}
+  .booking .eyebrow{color:var(--stone-light);}
+  .booking p.lead{color:#c9c6bd;font-size:14.5px;max-width:38ch;margin-bottom:28px;}
+  .booking-points{display:flex;flex-direction:column;gap:14px;}
+  .booking-points .row{display:flex;gap:14px;align-items:center;}
+  .booking-points .icon-chip{width:40px;height:40px;border-radius:50%;background:var(--accent-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .booking-points .icon-chip .icon{width:19px;height:19px;color:var(--accent-light);}
+  .booking-points .row span{font-size:14px;color:#e6e3d9;font-weight:500;}
+
+  .form-card{background:#fff;color:var(--ink);padding:36px;border-radius:var(--r);}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:11.5px;color:var(--stone);margin-bottom:7px;font-weight:600;}
+  .field input,.field select,.field textarea{
+    width:100%;border:1.5px solid var(--line);background:var(--bg);
+    padding:12px 13px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);
+    border-radius:8px;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:1.5px solid var(--accent);outline-offset:1px;border-color:var(--accent);
+  }
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .form-card textarea{resize:vertical;min-height:76px;}
+  .form-card .btn{width:100%;text-align:center;margin-top:6px;}
+  .form-note{font-size:11.5px;color:var(--stone);margin-top:14px;line-height:1.5;}
+  .confirm{display:none;text-align:center;padding:30px 10px;}
+  .confirm .icon-chip{width:56px;height:56px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+  .confirm .icon-chip .icon{width:26px;height:26px;color:var(--accent);}
+  .confirm h3{font-size:20px;margin-bottom:8px;font-weight:500;}
+  .confirm p{font-size:13.5px;color:#514f49;}
+
+  /* ---------- Footer / Register ---------- */
+  footer{padding:80px 0 40px;}
+  .register-head{margin-bottom:32px;}
+  .register-head h2{font-size:27px;font-weight:500;}
+  .register{border-top:1px solid var(--line);}
+  .reg-row{display:grid;grid-template-columns:52px 1fr 1.5fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center;}
+  .reg-row .icon-chip{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;}
+  .reg-row .icon-chip .icon{width:18px;height:18px;color:var(--accent);}
+  .reg-row .label{font-size:13.5px;color:var(--ink);font-weight:600;}
+  .reg-row .value{font-size:13px;color:var(--stone);}
+  .reg-row .value em{font-style:normal;color:var(--stone-light);}
+  .foot-bottom{
+    display:flex;justify-content:space-between;align-items:center;margin-top:36px;padding-top:22px;
+    border-top:1px solid var(--line);font-size:11.5px;color:var(--stone);flex-wrap:wrap;gap:12px;
+  }
+
+  @media (max-width: 860px){
+    .wrap{padding:0 20px;}
+    .hero{padding:48px 0 0;}
+    .hero-grid{grid-template-columns:1fr;gap:36px;}
+    .hero h1{font-size:32px;}
+    .hero-image{aspect-ratio:16/10;}
+    .quick-facts{grid-template-columns:repeat(2,1fr);}
+    .service-grid{grid-template-columns:1fr;}
+    .news-grid{grid-template-columns:1fr;}
+    .booking-grid{grid-template-columns:1fr;gap:36px;}
+    .field-row{grid-template-columns:1fr;}
+    .reg-row{grid-template-columns:38px 1fr;}
+    .reg-row .value{grid-column:1 / -1;}
+    section{padding:56px 0;}
+    .banner-placeholder{height:200px;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.3" y2="15.3"/></symbol>
+  <symbol id="icon-chevron" viewBox="0 0 24 24"><polyline points="8,4 16,12 8,20"/></symbol>
+  <symbol id="icon-home" viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-6h4v6"/></symbol>
+  <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="11" rx="1.5"/><path d="M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><line x1="3.5" y1="13" x2="20.5" y2="13"/></symbol>
+  <symbol id="icon-news" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><line x1="7" y1="8.5" x2="17" y2="8.5"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="15.5" x2="13" y2="15.5"/></symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="15" rx="1.5"/><line x1="3.5" y1="10" x2="20.5" y2="10"/><line x1="8" y1="3.5" x2="8" y2="7.5"/><line x1="16" y1="3.5" x2="16" y2="7.5"/></symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 6.5 12 13l8-6.5"/></symbol>
+  <symbol id="icon-trending" viewBox="0 0 24 24"><polyline points="4,16 10,10 14,14 20,7"/><polyline points="14,7 20,7 20,13"/></symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 4 5 6.5V11c0 5 3 8.3 7 9 4-.7 7-4 7-9V6.5Z"/><polyline points="9,12 11,14 15,9.5"/></symbol>
+  <symbol id="icon-bank" viewBox="0 0 24 24"><polygon points="12,3.5 21,8.5 3,8.5"/><line x1="5" y1="11" x2="5" y2="18"/><line x1="9.5" y1="11" x2="9.5" y2="18"/><line x1="14.5" y1="11" x2="14.5" y2="18"/><line x1="19" y1="11" x2="19" y2="18"/><line x1="3" y1="20" x2="21" y2="20"/></symbol>
+  <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="1.5"/><circle cx="9" cy="10" r="1.7"/><path d="M4 17l5-5 4 4 3-3 4 4"/></symbol>
+  <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M6.5 3.5c-1.7 0-3 1.3-3 3 0 8.3 6.7 15 15 15 1.7 0 3-1.3 3-3v-2.3c0-.6-.4-1.1-.9-1.3l-3.6-1.3c-.5-.2-1.1 0-1.4.4l-1 1.3c-2.1-1-3.8-2.7-4.8-4.8l1.3-1c.4-.3.6-.9.4-1.4L10.1 4.4c-.2-.5-.7-.9-1.3-.9H6.5Z"/></symbol>
+  <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></symbol>
+  <symbol id="icon-percent" viewBox="0 0 24 24"><line x1="6" y1="18" x2="18" y2="6"/><circle cx="7.5" cy="7.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.3"/><polyline points="12,7.5 12,12 15.5,14"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.3"/><polyline points="8,12.5 11,15.5 16.5,9"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <div class="nav-left">
+      <button class="burger" id="burger" aria-label="Menü öffnen"><svg class="icon"><use href="#icon-menu"/></svg></button>
+      <div class="logo">
+        <div class="mark">F</div>
+        <div class="word"><b>Finovance</b><small>Consalting UG</small></div>
+      </div>
+    </div>
+    <a href="#termin" class="btn btn-solid">Termin buchen</a>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar" aria-hidden="true">
+  <div class="sidebar-head">
+    <div class="logo">
+      <div class="mark">F</div>
+      <div class="word"><b>Finovance</b><small>Consalting UG</small></div>
+    </div>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Menü schließen"><svg class="icon"><use href="#icon-close"/></svg></button>
+  </div>
+  <div class="sidebar-search">
+    <div class="field-shell">
+      <svg class="icon"><use href="#icon-search"/></svg>
+      <input type="text" placeholder="Menü durchsuchen…">
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="sidebar-item sidebar-link">
+      <span class="icon-chip"><svg class="icon"><use href="#icon-home"/></svg></span>
+      <span class="label">Start</span>
+      <svg class="icon chevron"><use href="#icon-chevron"/></svg>
+    </a>
+    <a href="#leistungen" class="sidebar-item sidebar-link">
+      <span class="icon-chip"><svg class="icon"><use href="#icon-briefcase"/></svg></span>
+      <span class="label">Leistungen</span>
+      <svg class="icon chevron"><use href="#icon-chevron"/></svg>
+    </a>
+    <a href="#news" class="sidebar-item sidebar-link">
+      <span class="icon-chip"><svg class="icon"><use href="#icon-news"/></svg></span>
+      <span class="label">News</span>
+      <svg class="icon chevron"><use href="#icon-chevron"/></svg>
+    </a>
+    <a href="#termin" class="sidebar-item sidebar-link">
+      <span class="icon-chip"><svg class="icon"><use href="#icon-calendar"/></svg></span>
+      <span class="label">Termin buchen</span>
+      <svg class="icon chevron"><use href="#icon-chevron"/></svg>
+    </a>
+    <a href="#register" class="sidebar-item sidebar-link">
+      <span class="icon-chip"><svg class="icon"><use href="#icon-mail"/></svg></span>
+      <span class="label">Kontakt</span>
+      <svg class="icon chevron"><use href="#icon-chevron"/></svg>
+    </a>
+  </nav>
+  <div class="sidebar-foot">
+    <p>Mo–Fr, nach Vereinbarung — vor Ort oder digital</p>
+    <a href="#termin" class="btn btn-outline sidebar-link">Termin buchen</a>
+  </div>
+</aside>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Unabhängige Finanzberatung</span>
+      <h1>Klarheit für Ihre finanziellen Entscheidungen.</h1>
+      <p class="lead">Persönliche Beratung zu Vermögensaufbau, Vorsorge und Finanzierung — unabhängig und verständlich erklärt.</p>
+      <div class="hero-ctas">
+        <a href="#termin" class="btn btn-solid">Termin buchen</a>
+        <a href="#leistungen" class="btn btn-outline">Leistungen ansehen</a>
+      </div>
+    </div>
+    <div class="img-placeholder hero-image">
+      <svg class="icon"><use href="#icon-image"/></svg>
+      <span class="ph-label">Bild folgt</span>
+      <span class="ph-size">z. B. Beraterfoto oder Teambild</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="quick-facts">
+      <div class="qf-item"><span class="icon-chip"><svg class="icon"><use href="#icon-check"/></svg></span><span>Kostenfrei</span></div>
+      <div class="qf-item"><span class="icon-chip"><svg class="icon"><use href="#icon-clock"/></svg></span><span>Antwort &lt; 24 Std.</span></div>
+      <div class="qf-item"><span class="icon-chip"><svg class="icon"><use href="#icon-home"/></svg></span><span>Vor Ort / digital</span></div>
+      <div class="qf-item"><span class="icon-chip"><svg class="icon"><use href="#icon-shield"/></svg></span><span>Unabhängig</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="leistungen">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Leistungen</h2>
+      <p>Drei Beratungsfelder für Ihre Finanzen.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon-chip"><svg class="icon"><use href="#icon-trending"/></svg></div>
+        <h3>Vermögensaufbau</h3>
+        <p>Strategien, die zu Ihren Zielen passen.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-chip"><svg class="icon"><use href="#icon-shield"/></svg></div>
+        <h3>Altersvorsorge</h3>
+        <p>Vorsorge, die zu Ihrem Leben passt.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-chip"><svg class="icon"><use href="#icon-bank"/></svg></div>
+        <h3>Finanzierung</h3>
+        <p>Faire Konditionen, klar erklärt.</p>
+      </div>
+    </div>
+    <div class="img-placeholder banner-placeholder">
+      <svg class="icon"><use href="#icon-image"/></svg>
+      <span class="ph-label">Bild folgt</span>
+      <span class="ph-size">Breites Beratungs- oder Büro-Foto</span>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>News</h2>
+      <p>Aktuelles kurz eingeordnet.</p>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-percent"/></svg></span>
+        <span class="date">August 2026</span>
+        <h3>Zinsen: Was sich für Baufinanzierungen ändert</h3>
+        <p>Konditionen im Überblick.</p>
+        <span class="arrow">→</span>
+      </div>
+      <div class="news-card">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-shield"/></svg></span>
+        <span class="date">Juli 2026</span>
+        <h3>Drei oft übersehene Stellschrauben bei der Vorsorge</h3>
+        <p>Kurz und praxisnah erklärt.</p>
+        <span class="arrow">→</span>
+      </div>
+      <div class="news-card">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-trending"/></svg></span>
+        <span class="date">Juni 2026</span>
+        <h3>Marktschwankungen richtig einordnen</h3>
+        <p>Ruhig bleiben zahlt sich aus.</p>
+        <span class="arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="termin">
+  <div class="wrap booking-grid">
+    <div>
+      <span class="eyebrow">Termin buchen</span>
+      <h2>Sprechen wir über Ihre Situation.</h2>
+      <p class="lead">30 Minuten, unverbindlich. Sie erhalten direkt eine Bestätigung.</p>
+      <div class="booking-points">
+        <div class="row"><span class="icon-chip"><svg class="icon"><use href="#icon-home"/></svg></span><span>Vor Ort oder digital</span></div>
+        <div class="row"><span class="icon-chip"><svg class="icon"><use href="#icon-check"/></svg></span><span>Kostenfreies Erstgespräch</span></div>
+        <div class="row"><span class="icon-chip"><svg class="icon"><use href="#icon-clock"/></svg></span><span>Antwort innerhalb eines Werktags</span></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="bookingForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" required>
+          </div>
+          <div class="field">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="phone">Telefon</label>
+            <input type="tel" id="phone">
+          </div>
+          <div class="field">
+            <label for="topic">Anliegen</label>
+            <select id="topic">
+              <option>Vermögensaufbau</option>
+              <option>Altersvorsorge</option>
+              <option>Finanzierung</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="date">Wunschtermin</label>
+            <input type="date" id="date">
+          </div>
+          <div class="field">
+            <label for="time">Uhrzeit (ca.)</label>
+            <input type="time" id="time">
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Nachricht (optional)</label>
+          <textarea id="message" placeholder="Worum geht es in Ihrem Anliegen?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Termin anfragen</button>
+        <p class="form-note">Mit dem Absenden stimmen Sie zu, dass wir Sie zur Terminvereinbarung kontaktieren.</p>
+      </form>
+
+      <div class="confirm" id="confirmBox">
+        <div class="icon-chip"><svg class="icon"><use href="#icon-check"/></svg></div>
+        <h3>Vielen Dank.</h3>
+        <p>Ihre Anfrage ist eingegangen — wir melden uns innerhalb eines Werktags.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="register">
+  <div class="wrap">
+    <div class="register-head">
+      <span class="eyebrow">Kontakt</span>
+      <h2>Register</h2>
+    </div>
+    <div class="register">
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-briefcase"/></svg></span>
+        <span class="label">Firma</span>
+        <span class="value">Finovance Consalting UG (haftungsbeschränkt)</span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-pin"/></svg></span>
+        <span class="label">Adresse</span>
+        <span class="value"><em>wird ergänzt</em></span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-phone"/></svg></span>
+        <span class="label">Telefon</span>
+        <span class="value"><em>wird ergänzt</em></span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-mail"/></svg></span>
+        <span class="label">E-Mail</span>
+        <span class="value"><em>wird ergänzt</em></span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-bank"/></svg></span>
+        <span class="label">Handelsregister</span>
+        <span class="value"><em>wird ergänzt</em></span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-percent"/></svg></span>
+        <span class="label">USt-IdNr.</span>
+        <span class="value"><em>wird ergänzt</em></span>
+      </div>
+      <div class="reg-row">
+        <span class="icon-chip"><svg class="icon"><use href="#icon-clock"/></svg></span>
+        <span class="label">Sprechzeiten</span>
+        <span class="value">Mo–Fr, nach Vereinbarung</span>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Finovance Consalting UG</span>
+      <span>Impressum · Datenschutz</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burger = document.getElementById('burger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarClose');
+  const body = document.body;
+
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    sidebar.setAttribute('aria-hidden','false');
+    body.classList.add('locked');
+  }
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    sidebar.setAttribute('aria-hidden','true');
+    body.classList.remove('locked');
+  }
+  burger.addEventListener('click', openSidebar);
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSidebar(); });
+  document.querySelectorAll('.sidebar-link').forEach(a => a.addEventListener('click', closeSidebar));
+
+  const form = document.getElementById('bookingForm');
+  const confirmBox = document.getElementById('confirmBox');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.style.display = 'none';
+    confirmBox.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
