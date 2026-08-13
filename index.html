@@ -301,73 +301,77 @@
   .menu-btn .icon{width:22px;height:22px;}
 
   /* ---------- Mega-Menü ---------- */
-  .mega{
-    position:fixed;inset:0;z-index:200;background:#fff;
-    display:flex;flex-direction:column;
-    opacity:0;pointer-events:none;transform:translateY(-12px);
-    transition:opacity .3s ease, transform .3s ease;
+  /* abgedunkelter Hintergrund hinter der Seitenleiste */
+  .mega-overlay{
+    position:fixed;inset:0;z-index:190;background:rgba(10,14,20,.5);
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
   }
-  .mega.open{opacity:1;pointer-events:auto;transform:none;}
+  .mega-overlay.open{opacity:1;pointer-events:auto;}
+
+  /* Seitenleiste, faehrt von links ein */
+  .mega{
+    position:fixed;top:0;left:0;bottom:0;width:min(420px,90vw);z-index:200;background:#fff;
+    display:flex;flex-direction:column;
+    transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 0 40px rgba(0,0,0,.18);
+  }
+  .mega.open{transform:none;}
   .mega-top{
     display:flex;align-items:center;justify-content:space-between;
-    padding:16px 40px;border-bottom:1px solid var(--line);flex-shrink:0;
+    padding:18px 24px;border-bottom:1px solid var(--line);flex-shrink:0;
   }
   .mega-close{
     background:none;border:1.5px solid var(--accent);color:var(--accent);cursor:pointer;
-    width:44px;height:44px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;
     transition:background .2s,color .2s;
   }
   .mega-close:hover{background:var(--accent);color:#fff;}
   .mega-close .icon{width:20px;height:20px;}
-  .mega-body{flex:1;display:grid;grid-template-columns:340px 1fr;min-height:0;}
-  .mega-left{
-    background:var(--accent-dark);color:#eef4f9;padding:34px 0 24px;
-    display:flex;flex-direction:column;
+
+  .mega-nav{flex:1;overflow-y:auto;padding:14px 16px;}
+  .mega-nav a{
+    display:flex;align-items:center;gap:16px;
+    padding:16px 14px;border-radius:var(--r);
+    font-size:17px;font-weight:700;color:var(--accent-dark);
+    border-bottom:1px solid var(--line);transition:background .15s;
   }
-  .mega-cat{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    background:none;border:0;cursor:pointer;text-align:left;
-    color:#eef4f9;font-family:Calibri,'Segoe UI',Candara,Optima,sans-serif;
-    font-size:22px;font-weight:700;padding:16px 40px;
-    border-left:4px solid transparent;transition:background .15s,border-color .15s;
+  .mega-nav a:last-child{border-bottom:none;}
+  .mega-nav a:hover{background:var(--accent-soft);}
+  .mega-nav a .icon{width:24px;height:24px;color:var(--accent);flex-shrink:0;}
+  .mega-nav a span{flex:1;}
+  .mega-nav a .chev{width:15px;height:15px;color:var(--stone-light);}
+  .mega-foot{
+    padding:18px 24px 26px;border-top:1px solid var(--line);
+    display:flex;flex-direction:column;gap:5px;
+    font-size:13px;color:var(--stone);
   }
-  .mega-cat .chev{width:16px;height:16px;color:#6f9bc0;}
-  .mega-cat:hover{background:#0e3352;}
-  .mega-cat.active{background:#0e3352;border-left-color:var(--accent-light);}
-  .mega-left-foot{
-    margin-top:auto;padding:20px 40px 0;display:flex;flex-direction:column;gap:6px;
-    font-size:13px;color:#9fbdd6;border-top:1px solid #163a5a;margin-left:0;
+
+  @media (max-width: 860px){
+    .wrap{padding:0 20px;}
+    .nav{padding:14px 20px;}
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .nav .btn{padding:10px 16px;font-size:12px;}
+    .hero{padding:48px 0 0;}
+    .hero-grid{grid-template-columns:1fr;gap:36px;}
+    .hero h1{font-size:32px;}
+    .hero-image{aspect-ratio:16/10;}
+    .quick-facts{grid-template-columns:repeat(2,1fr);}
+    .service-grid{grid-template-columns:1fr;}
+    .news-grid{grid-template-columns:1fr;}
+    .booking-grid{grid-template-columns:1fr;gap:36px;}
+    .field-row{grid-template-columns:1fr;}
+    section{padding:56px 0;}
+    .footer-top{grid-template-columns:1fr 1fr;gap:32px;}
+    .footer-brand{grid-column:1 / -1;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .banner-placeholder{height:200px;}
   }
-  .mega-left-foot{margin-top:auto;}
-  .mega-right{padding:44px 48px;overflow-y:auto;}
-  .mega-eyebrow{
-    display:block;font-size:13px;font-weight:600;color:var(--accent);
-    margin-bottom:26px;letter-spacing:.02em;
-  }
-  .mega-panel{display:none;}
-  .mega-panel.active{display:block;animation:megaFade .25s ease;}
-  @keyframes megaFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .mega-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;max-width:760px;}
-  .mega-links a{
-    display:flex;align-items:center;gap:16px;padding:14px 14px;border-radius:var(--r);
-    transition:background .15s;
-  }
-  .mega-links a:hover{background:var(--accent-soft);}
-  .mega-links a .icon{width:26px;height:26px;color:var(--accent);flex-shrink:0;}
-  .mega-links a span{display:flex;flex-direction:column;}
-  .mega-links a b{font-size:16px;font-weight:700;color:var(--accent-dark);}
-  .mega-links a small{font-size:13px;color:var(--stone);}
 
   @media (max-width: 860px){
     .menu-btn span{display:none;}
     .menu-btn{padding:11px 13px;}
-    .mega-top{padding:14px 20px;}
-    .mega-body{grid-template-columns:1fr;overflow-y:auto;}
-    .mega-left{padding:16px 0;}
-    .mega-cat{font-size:19px;padding:14px 20px;}
-    .mega-left-foot{padding:16px 20px 0;}
-    .mega-right{padding:24px 20px 40px;}
-    .mega-links{grid-template-columns:1fr;gap:6px;}
+    .mega{width:88vw;}
   }
 
   /* ---------- Über uns ---------- */
@@ -428,6 +432,7 @@
   </div>
 </header>
 
+<div class="mega-overlay" id="megaOverlay"></div>
 <div class="mega" id="mega" aria-hidden="true">
   <div class="mega-top">
     <a href="#" class="logo mega-logo">
@@ -438,49 +443,17 @@
       <svg class="icon"><use href="#icon-close"/></svg>
     </button>
   </div>
-  <div class="mega-body">
-    <div class="mega-left">
-      <button class="mega-cat active" data-panel="leistungen">Leistungen<svg class="icon chev"><use href="#icon-chevron"/></svg></button>
-      <button class="mega-cat" data-panel="karriere">Karriere<svg class="icon chev"><use href="#icon-chevron"/></svg></button>
-      <button class="mega-cat" data-panel="ueber">Über uns<svg class="icon chev"><use href="#icon-chevron"/></svg></button>
-      <a class="mega-cat" href="#news">Ratgeber &amp; News</a>
-      <a class="mega-cat" href="#termin">Kontakt</a>
-      <div class="mega-left-foot">
-        <span>Mo–Fr, nach Vereinbarung</span>
-        <span>Beratung vor Ort oder digital</span>
-      </div>
-    </div>
-    <div class="mega-right">
-      <div class="mega-panel active" data-panel="leistungen">
-        <span class="mega-eyebrow">Unsere Leistungen</span>
-        <div class="mega-links">
-          <a href="#leistungen"><svg class="icon"><use href="#icon-shield"/></svg><span><b>Altersvorsorge</b><small>Vorsorge, die zu Ihrem Leben passt</small></span></a>
-          <a href="#leistungen"><svg class="icon"><use href="#icon-trending"/></svg><span><b>Vermögensaufbau</b><small>Strategien für Ihre Ziele</small></span></a>
-          <a href="#leistungen"><svg class="icon"><use href="#icon-check"/></svg><span><b>Absicherung</b><small>Versicherungen mit Weitblick</small></span></a>
-          <a href="#leistungen"><svg class="icon"><use href="#icon-home"/></svg><span><b>Baufinanzierung</b><small>Faire Konditionen, klar erklärt</small></span></a>
-          <a href="#leistungen"><svg class="icon"><use href="#icon-percent"/></svg><span><b>Geldanlage &amp; Investment</b><small>Anlegen mit Struktur</small></span></a>
-          <a href="#leistungen"><svg class="icon"><use href="#icon-briefcase"/></svg><span><b>Berufsunfähigkeit</b><small>Absicherung Ihrer Arbeitskraft</small></span></a>
-        </div>
-      </div>
-      <div class="mega-panel" data-panel="karriere">
-        <span class="mega-eyebrow">Karriere bei Finovance</span>
-        <div class="mega-links">
-          <a href="#karriere"><svg class="icon"><use href="#icon-trending"/></svg><span><b>Einstieg als Berater:in</b><small>Ihre Zukunft aktiv gestalten</small></span></a>
-          <a href="#karriere"><svg class="icon"><use href="#icon-check"/></svg><span><b>Quereinsteiger:innen</b><small>Neu starten mit Begleitung</small></span></a>
-          <a href="#karriere"><svg class="icon"><use href="#icon-briefcase"/></svg><span><b>Studierende &amp; Absolvent:innen</b><small>Praxisnah durchstarten</small></span></a>
-          <a href="#karriere"><svg class="icon"><use href="#icon-shield"/></svg><span><b>Weiterbildung</b><small>Lernen mit erfahrenen Mentor:innen</small></span></a>
-        </div>
-      </div>
-      <div class="mega-panel" data-panel="ueber">
-        <span class="mega-eyebrow">Über Finovance</span>
-        <div class="mega-links">
-          <a href="#ueber"><svg class="icon"><use href="#icon-briefcase"/></svg><span><b>Unternehmen</b><small>Wer wir sind</small></span></a>
-          <a href="#ueber"><svg class="icon"><use href="#icon-check"/></svg><span><b>Beratungsansatz</b><small>Unabhängig &amp; ganzheitlich</small></span></a>
-          <a href="#ueber"><svg class="icon"><use href="#icon-home"/></svg><span><b>Digital &amp; persönlich</b><small>Beratung, wie sie zu Ihnen passt</small></span></a>
-          <a href="#termin"><svg class="icon"><use href="#icon-calendar"/></svg><span><b>Termin buchen</b><small>Lernen wir uns kennen</small></span></a>
-        </div>
-      </div>
-    </div>
+  <nav class="mega-nav">
+    <a href="#leistungen"><svg class="icon"><use href="#icon-briefcase"/></svg><span>Leistungen</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+    <a href="#ueber"><svg class="icon"><use href="#icon-check"/></svg><span>Über uns</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+    <a href="#karriere"><svg class="icon"><use href="#icon-trending"/></svg><span>Karriere</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+    <a href="#news"><svg class="icon"><use href="#icon-news"/></svg><span>Ratgeber &amp; News</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+    <a href="#termin"><svg class="icon"><use href="#icon-calendar"/></svg><span>Termin buchen</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+    <a href="#register"><svg class="icon"><use href="#icon-mail"/></svg><span>Kontakt</span><svg class="icon chev"><use href="#icon-chevron"/></svg></a>
+  </nav>
+  <div class="mega-foot">
+    <span>Mo–Fr, nach Vereinbarung</span>
+    <span>Beratung vor Ort oder digital</span>
   </div>
 </div>
 
@@ -775,27 +748,16 @@
   const mega = document.getElementById('mega');
   const menuBtn = document.getElementById('menuBtn');
   const megaClose = document.getElementById('megaClose');
+  const megaOverlay = document.getElementById('megaOverlay');
   const body = document.body;
 
-  function openMega(){ mega.classList.add('open'); mega.setAttribute('aria-hidden','false'); body.classList.add('locked'); }
-  function closeMega(){ mega.classList.remove('open'); mega.setAttribute('aria-hidden','true'); body.classList.remove('locked'); }
+  function openMega(){ mega.classList.add('open'); megaOverlay.classList.add('open'); mega.setAttribute('aria-hidden','false'); body.classList.add('locked'); }
+  function closeMega(){ mega.classList.remove('open'); megaOverlay.classList.remove('open'); mega.setAttribute('aria-hidden','true'); body.classList.remove('locked'); }
   menuBtn.addEventListener('click', openMega);
   megaClose.addEventListener('click', closeMega);
+  megaOverlay.addEventListener('click', closeMega);
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMega(); });
 
-  // Kategorie-Umschaltung im Mega-Menü
-  const cats = document.querySelectorAll('.mega-cat[data-panel]');
-  const panels = document.querySelectorAll('.mega-panel');
-  cats.forEach(cat => {
-    const show = () => {
-      const key = cat.getAttribute('data-panel');
-      cats.forEach(x => x.classList.toggle('active', x === cat));
-      panels.forEach(p => p.classList.toggle('active', p.getAttribute('data-panel') === key));
-    };
-    cat.addEventListener('mouseenter', show);
-    cat.addEventListener('click', show);
-    cat.addEventListener('focus', show);
-  });
   // Klick auf einen Menü-Link schließt das Mega-Menü
   document.querySelectorAll('#mega a[href^="#"]').forEach(a => a.addEventListener('click', closeMega));
 
